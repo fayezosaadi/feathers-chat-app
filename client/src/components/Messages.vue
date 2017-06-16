@@ -1,9 +1,11 @@
 <template>
   <div>
+    <input type="text" placeholder="Your name" v-model="newName" @keyup.enter="tryAddMessage">
     <input type="text" placeholder="Enter message" v-model="newMessage" @keyup.enter="tryAddMessage">
     <button type="submit" @click="tryAddMessage">Add message</button>
     <ul>
       <li v-for="message in messages">
+        <span>{{ message.name }}</span>
         <span>{{ message.text }}</span>
         <span @click="tryRemoveMessage(message)">x</span>
       </li>
@@ -29,7 +31,8 @@
     },
     data () {
       return {
-        newMessage: ''
+        newMessage: '',
+        newName: ''
       }
     },
 
@@ -43,7 +46,7 @@
       tryAddMessage () {
         if (this.newMessage.trim()) {
           // Persist a new message to the db
-          services.messageService.create({ text: this.newMessage }).then(this.newMessage = '')
+          services.messageService.create({ text: this.newMessage, name: this.newName }).then(this.newMessage = '')
         }
       },
       tryRemoveMessage (message) {
