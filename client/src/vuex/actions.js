@@ -17,6 +17,7 @@ export const addMessage = function ({dispatch}) {
 export const removeMessage = function ({dispatch}) {
   // A message has been removed from the server, so dispatch a mutation to update our state/view
   services.messageService.on('removed', message => {
+    console.log('test if delete')
     dispatch('REMOVE_MESSAGE', message)
   })
 }
